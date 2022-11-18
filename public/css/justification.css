@@ -26,3 +26,11 @@
 .dataCont {
   display: flex;
 }
+
+.warning {
+  background-color: #f44336;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
+}

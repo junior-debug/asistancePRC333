@@ -24,6 +24,11 @@ if (isset($_GET['mode'])) {
             break;
             #------------------------------------------------------------------------------------
             break;
+        case "queryUser":
+            $id = $_POST['id'];
+            $data = $conexion->queyUser($id);
+            echo json_encode($data);
+            break;
         default:
             header('location:' . HTML_DIR . 'error.html');
             break;
