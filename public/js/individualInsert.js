@@ -27,6 +27,6 @@ function enableBut() {
   }
 }
 
-function setColor() {
-  $("#rotation").css("color", "black");
+function setColor(id) {
+  $(`#${id}`).css("color", "black");
 }

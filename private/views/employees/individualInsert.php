@@ -5,7 +5,15 @@
         <div class="formColumn">
             <div class="imgCont"></div>
             <input type="text" class="formInput" id="business" name="business" placeholder="Empresa" onchange="enableBut()">
-            <input type="text" class="formInput" name="payroll" placeholder="Nomina/Cliente">
+            <select name="payroll" class="formInput" style="margin-bottom: 21px;" id="payroll" onchange="setColor(id)">
+                <option disabled selected>Nomina</option>
+                <?php
+                foreach ($dataPayroll as $res) {
+                    if ($res["estatus_deshabilitado"] == 0) { ?>
+                        <option value="<?= $res["nomina"]; ?>"><?= $res["nomina"]; ?></option>
+                <?php }
+                } ?>
+            </select>
             <input type="text" class="formInput" name="id" placeholder="Cedula">
             <input type="text" class="formInput" name="birthDate" placeholder="Fecha de Nacimiento" onfocus="(this.type='date')" onblur="(this.type='text')">
             <input type="text" class="formInput" name="email" placeholder="Correo Electronico">
@@ -14,17 +22,33 @@
             <input type="text" class="formInput" name="dueDate" placeholder="Fecha de Culminacion de Contrato" onfocus="(this.type='date')" onblur="(this.type='text')">
         </div>
         <div class="formColumn">
-            <input type="text" class="formInput" name="position" placeholder="Cargo" style="margin-top: 1.1em;">
+            <select name="position" class="formInput" style="margin-bottom: 21px;" id="position" onchange="setColor(id)">
+                <option disabled selected>Seleccione un Cargo</option>
+                <?php
+                foreach ($dataPosition as $res) {
+                    if ($res["estatus_deshabilitado"] == 0) { ?>
+                        <option value="<?= $res["cargo"]; ?>"><?= $res["cargo"]; ?></option>
+                <?php }
+                } ?>
+            </select>
             <input type="text" class="formInput" name="campus" placeholder="Unidad Organizativa/Sede">
             <input type="text" class="formInput" name="turn" placeholder="Turno">
-            <select name="rotation" class="formInput" style="margin-bottom: 21px;" id="rotation" onchange="setColor()">
+            <select name="rotation" class="formInput" style="margin-bottom: 21px;" id="rotation" onchange="setColor(id)">
                 <option disabled selected>Selecciona una Rotacion</option>
                 <?php
-                foreach ($data as $res) { ?>
+                foreach ($dataRot as $res) { ?>
                     <option value="<?= $res["rotacion"]; ?>"><?= $res["rotacion"]; ?></option>
                 <?php } ?>
             </select>
-            <input type="text" class="formInput" name="workingHours" placeholder="Horario de Trabajo">
+            <select name="workingHours" class="formInput" style="margin-bottom: 21px;" id="workingHours" onchange="setColor(id)">
+                <option disabled selected>Horario de Trabajo</option>
+                <?php
+                foreach ($dataTimetable as $res) {
+                    if ($res["estatus_deshabilitado"] == 0) { ?>
+                        <option value="<?= $res["horarios"]; ?>"><?= $res["horarios"]; ?></option>
+                <?php }
+                } ?>
+            </select>
             <input type="text" class="formInput" name="exceptionLevel" placeholder="Nivel de Excepcion">
             <input type="text" class="formInput" name="file" placeholder="Ficha">
             <input type="text" class="formInput" name="bank" placeholder="Entidad Bancaria">

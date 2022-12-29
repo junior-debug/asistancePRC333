@@ -16,7 +16,10 @@ if (empty($_SESSION)) {
                 break;
                 #------------------------------------------------------------------------------------
             case 'individualInsert':
-                $data = $conexion->rotations();
+                $dataRot = $conexion->rotations();
+                $dataPosition = $conexion->position();
+                $dataTimetable = $conexion->timetable();
+                $dataPayroll = $conexion->payroll();
                 include(PUBLIC_DIR . 'general/header.php');
                 include(PUBLIC_DIR . 'general/navbar.php');
                 include(HTML_DIR . 'employees/individualInsert.php');

@@ -21,13 +21,79 @@ if (empty($_SESSION)) {
 				break;
 				#------------------------------------------------------------------------------------
 			case 'asistance':
-
 				$id = $_POST['id'];
 				$dataDay = $_POST['dataDay'];
 				$asistance = $conexion->asistance($id, $dataDay);
 				echo json_encode($asistance);
 				break;
 				#------------------------------------------------------------------------------------
+			case 'queryChanges':
+				$data = $conexion->changes();
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'userChanges':
+				$id = $_POST['id'];
+				$data = $conexion->userChanges($id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'payrollUpdate':
+				$value = $_POST['value'];
+				$id = $_POST['id'];
+				$data = $conexion->payrollUpdate($value, $id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'positionUpdate':
+				$value = $_POST['value'];
+				$id = $_POST['id'];
+				$data = $conexion->positionUpdate($value, $id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'turnUpdate':
+				$value = $_POST['value'];
+				$id = $_POST['id'];
+				$data = $conexion->turnUpdate($value, $id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'rotationUpdate':
+				$value = $_POST['value'];
+				$id = $_POST['id'];
+				$data = $conexion->rotationUpdate($value, $id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'deleteQuery':
+				$identifier = $_POST['identifier'];
+				$id = $_POST['id'];
+				$data = $conexion->deleteQuery($identifier, $id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'userData':
+				$id = $_POST['id'];
+				$data = $conexion->userData($id);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'userUpdate':
+				$requestDate = $_POST['requestDate'];
+				$id = $_POST['id'];
+				$oldRotation = $_POST['oldRotation'];
+				$data = $conexion->userUpdate($requestDate, $id, $oldRotation);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
+			case 'rotationLog':
+				$id = $_POST['id'];
+				$date = $_POST['date'];
+				$data = $conexion->rotationLog($id, $date);
+				echo json_encode($data);
+				#------------------------------------------------------------------------------------
+				break;
 			default:
 				header('location:' . HTML_DIR . 'error.html');
 				break;

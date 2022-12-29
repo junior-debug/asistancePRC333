@@ -32,8 +32,26 @@
               sistema
             </a>
             <ul class="dropdown-menu">
+              <li class="dropdown-header">
+                Rotacion
+              </li>
               <li><a class="dropdown-item" href="?view=sistema&mode=createRotation">Crear rotacion</a></li>
+              <li><a class="dropdown-item" href="?view=sistema&mode=changeRotation">Cambiar rotacion</a></li>
+              <li class="dropdown-header">
+                Justificacion
+              </li>
               <li><a class="dropdown-item" href="?view=sistema&mode=justification">Justificacion</a></li>
+              <li><a class="dropdown-item" href="?view=sistema&mode=justifications">Justificaciones</a></li>
+              <li><a class="dropdown-item" href="?view=sistema&mode=payrollTransfer">Transferencia de Nominas</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Administrador
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="?view=admin&mode=createData">Nuevas Creaciones</a></li>
+              <li><a class="dropdown-item" href="?view=admin&mode=editData">Editar Datos</a></li>
             </ul>
           </li>
         </ul>

@@ -197,11 +197,50 @@ function setIdDays(dayPosition, firstDayWeek) {
   }
 }
 
-function twoDays(first, second, dayPosition, totalDaysMonth) {
-  for (let i = 0; i < totalDaysMonth; i++) {
+function newRotTwo(first, second, dayPosition, totalDaysMonth) {
+  const currentMonth = new Date(year, month, 0).getDate();
+  for (let i = totalDaysMonth; i < currentMonth; i++) {
     if (dayPosition[i].id == first || dayPosition[i].id == second) {
       dayPosition[i].textContent = "DL";
     }
+  }
+}
+
+function newRotation(totalDaysMonth, newRot, dayPosition) {
+  switch (newRot) {
+    case "L-V":
+      newRotTwo("sab", "dom", dayPosition, totalDaysMonth);
+      break;
+    case "M-S":
+      newRotTwo("dom", "lun", dayPosition, totalDaysMonth);
+      break;
+    case "M-D":
+      newRotTwo("lun", "mar", dayPosition, totalDaysMonth);
+      break;
+    case "J-L":
+      newRotTwo("mar", "mie", dayPosition, totalDaysMonth);
+      break;
+    case "V-M":
+      newRotTwo("mie", "jue", dayPosition, totalDaysMonth);
+      break;
+    case "S-MI":
+      newRotTwo("lun", "mar", dayPosition, totalDaysMonth);
+      break;
+    case "D-J":
+      newRotTwo("vie", "sab", dayPosition, totalDaysMonth);
+      break;
+  }
+}
+
+function twoDays(first, second, dayPosition, totalDaysMonth, newRot = null) {
+  for (let i = 0; i < totalDaysMonth; i++) {
+    dayPosition[i].textContent = "";
+    if (dayPosition[i].id == first || dayPosition[i].id == second) {
+      dayPosition[i].textContent = "DL";
+    }
+  }
+  if (newRot) {
+    newRotation(totalDaysMonth, newRot, dayPosition);
   }
 }
 
@@ -230,28 +269,28 @@ function threeDays(days, dayPosition, totalDaysMonth) {
   }
 }
 
-function twoHolidays(rotacion, dayPosition, totalDaysMonth) {
+function twoHolidays(rotacion, dayPosition, totalDaysMonth, newRot = null) {
   switch (rotacion) {
     case "L-V":
-      twoDays("sab", "dom", dayPosition, totalDaysMonth);
+      twoDays("sab", "dom", dayPosition, totalDaysMonth, newRot);
       break;
     case "M-S":
-      twoDays("dom", "lun", dayPosition, totalDaysMonth);
+      twoDays("dom", "lun", dayPosition, totalDaysMonth, newRot);
       break;
     case "M-D":
-      twoDays("lun", "mar", dayPosition, totalDaysMonth);
+      twoDays("lun", "mar", dayPosition, totalDaysMonth, newRot);
       break;
     case "J-L":
-      twoDays("mar", "mie", dayPosition, totalDaysMonth);
+      twoDays("mar", "mie", dayPosition, totalDaysMonth, newRot);
       break;
     case "V-M":
-      twoDays("mie", "jue", dayPosition, totalDaysMonth);
+      twoDays("mie", "jue", dayPosition, totalDaysMonth, newRot);
       break;
     case "S-MI":
-      twoDays("lun", "mar", dayPosition, totalDaysMonth);
+      twoDays("lun", "mar", dayPosition, totalDaysMonth, newRot);
       break;
     case "D-J":
-      twoDays("vie", "sab", dayPosition, totalDaysMonth);
+      twoDays("vie", "sab", dayPosition, totalDaysMonth, newRot);
       break;
   }
 }
@@ -286,6 +325,13 @@ function fourHolidays(rotation, dayPosition, totalDaysMonth) {
   threeDays(days, dayPosition, totalDaysMonth);
 }
 
+function forData(data) {
+  for (let x = 0; x < data.length; x++) {
+    let just = data[0].justificacion;
+    return just;
+  }
+}
+
 function queryDays(id, dataDay, i, dayPosition) {
   $.ajax({
     type: "POST",
@@ -293,13 +339,134 @@ function queryDays(id, dataDay, i, dayPosition) {
     dataType: "json",
     data: { id: id, dataDay: dataDay },
     success: function (data) {
-      if (data != "") {
-        dayPosition[i].textContent = "AP";
-      } else if (data == false && dayPosition[i].textContent == "") {
-        dayPosition[i].textContent = "E";
+      if (data != false) {
+        let just = forData(data);
+        if (data != "" && just == "") {
+          dayPosition[i].textContent = "AP";
+        } else if (
+          data != "" &&
+          just != "" &&
+          dayPosition[i].textContent == ""
+        ) {
+          dayPosition[i].textContent = just;
+        }
+      } else if (data == false) {
+        if (dayPosition[i].textContent == "") {
+          dayPosition[i].textContent = "E";
+        }
       }
     },
   });
+}
+
+function dataLog(id, selectedMonth, x) {
+  $.ajax({
+    type: "POST",
+    url: "?view=calendary&mode=userChanges",
+    dataType: "json",
+    data: { id: id },
+    success: function (data) {
+      for (let i = 0; i < data.length; i++) {
+        let arr = data[i].fecha.split("-");
+        if (selectedMonth == arr[1] && data[i].antigua_nomina != "") {
+          $(`#payRoll${x}`).text(`${data[i].antigua_nomina}`);
+        }
+        if (selectedMonth == arr[1] && data[i].antiguo_cargo != "") {
+          $(`#position${x}`).text(`${data[i].antiguo_cargo}`);
+        }
+        if (selectedMonth == arr[1] && data[i].antiguo_turno != "") {
+          $(`#turn${x}`).text(`${data[i].antiguo_turno}`);
+        }
+      }
+    },
+  });
+}
+
+function rotationLog(
+  id,
+  selectedMonth,
+  iterator,
+  dayPosition,
+  totalDaysMonth,
+  oldRot
+) {
+  let month = "";
+  if (selectedMonth < 9) {
+    month = "0" + selectedMonth;
+  } else {
+    month = selectedMonth;
+  }
+  const date = year + "-" + month;
+  $.ajax({
+    type: "POST",
+    url: "?view=calendary&mode=rotationLog",
+    dataType: "json",
+    data: { id: id, date: date },
+    success: function (data) {
+      if (data == false) {
+        let rotacion = oldRot;
+        let rotation = oldRot;
+        rotation = rotation.split("-");
+        holyDays(rotation, rotacion, dayPosition, totalDaysMonth, "");
+      } else {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].rotacion == "" && data[i].antigua_rotacion == "") {
+            $(`#rotation${iterator}`).text(`${oldRot}`);
+            let rotacion = oldRot;
+            let rotation = oldRot;
+            rotation = rotation.split("-");
+            holyDays(rotation, rotacion, dayPosition, totalDaysMonth, "");
+          } else if (data[i].rotacion == "" && data[i].antigua_rotacion != "") {
+            $(`#rotation${iterator}`).text(`${data[i].antigua_rotacion}`);
+            let rotacion = data[i].antigua_rotacion;
+            let rotation = data[i].antigua_rotacion;
+            rotation = rotation.split("-");
+            holyDays(rotation, rotacion, dayPosition, totalDaysMonth, "");
+          } else if (data[i].rotacion != "" && data[i].antigua_rotacion != "") {
+            $(`#rotation${iterator}`).text(`${data[i].rotacion}`);
+            let rotacion = data[i].rotacion;
+            let rotation = data[i].rotacion;
+            rotation = rotation.split("-");
+            let oldRotation = data[i].antigua_rotacion;
+            let dateOldRotation = data[i].fecha;
+            dateOldRotation = dateOldRotation.split("-");
+            dateOldRotation = dateOldRotation[2];
+            holyDays(
+              rotation,
+              rotacion,
+              dayPosition,
+              totalDaysMonth,
+              oldRotation,
+              dateOldRotation
+            );
+          }
+        }
+      }
+    },
+  });
+}
+
+function holyDays(
+  rotation,
+  rotacion,
+  dayPosition,
+  totalDaysMonth,
+  oldRotation,
+  dateOldRotation = null
+) {
+  if (oldRotation == "") {
+    if (rotation.length == 2) {
+      twoHolidays(rotacion, dayPosition, totalDaysMonth);
+    } else if (rotation.length > 2) {
+      fourHolidays(rotation, dayPosition, totalDaysMonth);
+    }
+  } else if (oldRotation != "") {
+    if (rotation.length == 2) {
+      twoHolidays(oldRotation, dayPosition, dateOldRotation, rotacion);
+    } else if (rotation.length > 2) {
+      fourHolidays(rotation, dayPosition, dateOldRotation);
+    }
+  }
 }
 
 function queryCalendary(firstDayWeek, totalDaysMonth, selectedMonth) {
@@ -315,12 +482,9 @@ function queryCalendary(firstDayWeek, totalDaysMonth, selectedMonth) {
         for (let i = 0; i < res.length; i++) {
           $(`.tableAsistance${i}`).remove();
           $(`.day${i}`).remove();
-          let rotacion = res[i].rotacion;
           let id = res[i].cedula;
-          let rotation = res[i].rotacion;
-          rotation = rotation.split("-");
           $("#tableBody").append(
-            `<tr class='tableAsistance${i}'><td>${res[i].nomina_cliente}</td><td>${res[i].cedula}</td><td>${res[i].nombre_apellido}</td><td>${res[i].fecha_ingreso}</td><td>${res[i].finalizacion_contrato}</td><td>${res[i].cargo}</td><td>${res[i].turno}</td><td>${res[i].rotacion}</td></tr>`
+            `<tr class='tableAsistance${i}'><td id="payRoll${i}">${res[i].nomina_cliente}</td><td>${res[i].cedula}</td><td>${res[i].ficha}</td><td>${res[i].nombre_apellido}</td><td>${res[i].fecha_ingreso}</td><td>${res[i].finalizacion_contrato}</td><td id="position${i}">${res[i].cargo}</td><td id="turn${i}">${res[i].turno}</td><td id="rotation${i}">${res[i].rotacion}</td></tr>`
           );
           for (let x = 0; x < $(".dataDay").length; x++) {
             $(`.tableAsistance${i}`).append(
@@ -328,7 +492,24 @@ function queryCalendary(firstDayWeek, totalDaysMonth, selectedMonth) {
             );
           }
           let dayPosition = document.getElementsByClassName(`day${i}`);
+
           setIdDays(dayPosition, firstDayWeek);
+          if (res[i].estatus_cambios == 1) {
+            dataLog(id, selectedMonth, i);
+            rotationLog(
+              id,
+              selectedMonth,
+              i,
+              dayPosition,
+              totalDaysMonth,
+              res[i].rotacion
+            );
+          } else {
+            let rotacion = res[i].rotacion;
+            let rotation = res[i].rotacion;
+            rotation = rotation.split("-");
+            holyDays(rotation, rotacion, dayPosition, totalDaysMonth, "");
+          }
           if (selectedMonth == month) {
             for (let t = 0; t < today; t++) {
               let day = 1 + t;
@@ -348,11 +529,6 @@ function queryCalendary(firstDayWeek, totalDaysMonth, selectedMonth) {
               queryDays(id, dataDay, t, dayPosition);
             }
           }
-          if (rotation.length == 2) {
-            twoHolidays(rotacion, dayPosition, totalDaysMonth);
-          } else if (rotation.length > 2) {
-            fourHolidays(rotation, dayPosition, totalDaysMonth);
-          }
         }
       },
       400: function () {
@@ -364,3 +540,148 @@ function queryCalendary(firstDayWeek, totalDaysMonth, selectedMonth) {
     },
   });
 }
+
+function download() {
+  $("#table").table2excel({
+    exclude: ".noExl",
+    name: "Excel Document Name",
+    filename: "calendario" + new Date().toISOString() + ".xls",
+    fileext: ".xls",
+    exclude_img: true,
+    exclude_links: true,
+    exclude_inputs: true,
+    preserveColors: true,
+  });
+}
+
+function payrollUpdate(value, id, update) {
+  $.ajax({
+    type: "POST",
+    url: `?view=calendary&mode=${update}`,
+    dataType: "json",
+    data: { value: value, id: id },
+    statusCode: {
+      200: function () {},
+      400: function () {
+        alert("Error en la solicitud");
+      },
+      500: function () {
+        alert("Error en el Servidor");
+      },
+    },
+  });
+}
+
+function userUpdate(requestDate, id, oldRotation) {
+  $.ajax({
+    type: "POST",
+    url: `?view=calendary&mode=userUpdate`,
+    dataType: "json",
+    data: { requestDate: requestDate, id: id, oldRotation: oldRotation },
+    statusCode: {
+      200: function () {},
+      400: function () {
+        alert("Error en la solicitud");
+      },
+      500: function () {
+        alert("Error en el Servidor");
+      },
+    },
+  });
+}
+
+function userData(requestDate, id) {
+  $.ajax({
+    type: "POST",
+    url: `?view=calendary&mode=userData`,
+    dataType: "json",
+    data: { id: id },
+    statusCode: {
+      200: function (data) {
+        userUpdate(requestDate, id, data[0].rotacion);
+      },
+      400: function () {
+        alert("Error en la solicitud");
+      },
+      500: function () {
+        alert("Error en el Servidor");
+      },
+    },
+  });
+}
+
+function dayValidation(requestDate, opt, updateValue, id, identifier) {
+  let arr = requestDate.split("-");
+  const requestYear = parseInt(arr[0]);
+  const requestMonth = parseInt(arr[1]);
+  const requestDay = parseInt(arr[2]);
+  const today = year + month + newDate.getDate();
+  const date = requestYear + requestMonth + requestDay;
+  if (today == date) {
+    userData(requestDate, id);
+    switch (opt) {
+      case "nomina":
+        payrollUpdate(updateValue, id, "payrollUpdate", identifier);
+        break;
+      case "cargo":
+        payrollUpdate(updateValue, id, "positionUpdate", identifier);
+        break;
+      case "turno":
+        payrollUpdate(updateValue, id, "turnUpdate", identifier);
+        break;
+      case "rotacion":
+        payrollUpdate(updateValue, id, "rotationUpdate", identifier);
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+function setChanges() {
+  $.ajax({
+    type: "POST",
+    url: "?view=calendary&mode=queryChanges",
+    dataType: "json",
+    data: {},
+    success: function (data) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].nomina != "") {
+          dayValidation(
+            data[i].fecha,
+            "nomina",
+            data[i].nomina,
+            data[i].cedula,
+            data[i].id
+          );
+        } else if (data[i].cargo != "") {
+          dayValidation(
+            data[i].fecha,
+            "cargo",
+            data[i].cargo,
+            data[i].cedula,
+            data[i].id
+          );
+        } else if (data[i].turno != "") {
+          dayValidation(
+            data[i].fecha,
+            "turno",
+            data[i].turno,
+            data[i].cedula,
+            data[i].id
+          );
+        } else if (data[i].rotacion != "") {
+          dayValidation(
+            data[i].fecha,
+            "rotacion",
+            data[i].rotacion,
+            data[i].cedula,
+            data[i].id
+          );
+        }
+      }
+    },
+  });
+}
+
+setChanges();

@@ -1,0 +1,14 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+.topSeparation {
+  height: 56px;
+}
+
+.cardCont {
+  width: 100%;
+  height: 6em;
+}

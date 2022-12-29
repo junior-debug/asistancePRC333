@@ -20,6 +20,10 @@
     </select>
 </div>
 
+<div class="card cardCont">
+    <button class="btn btn-primary" style="width: 20%;" onclick="download()">Descargar Excel</button>
+</div>
+
 <div id="calendar" class="collectonme">
     <div class="monthCont" style="display: flex;
   justify-content: center;
@@ -27,11 +31,12 @@
         <h2 id="month"></h2>
     </div>
     <div class="calendaryCont">
-        <table class="table table-striped" style="width: 100%">
+        <table id="table" class="table table-striped" style="width: 100%">
             <thead class="table-dark">
                 <tr id="day-labels">
                     <th rowspan="2" class="dataDays">nomina</th>
                     <th rowspan="2" class="dataDays">cedula</th>
+                    <th rowspan="2" class="dataDays">ficha</th>
                     <th rowspan="2" class="dataDays">nombres - apellidos</th>
                     <th rowspan="2" class="dataDays">f.ingreso</th>
                     <th rowspan="2" class="dataDays">f.contrato</th>
@@ -46,8 +51,9 @@
 
             </tbody>
         </table>
-        </tbody>
     </div>
 </div>
 <div id="bottom" class="collectonme"></div>
+<script src="bower_components\jquery\dist\jquery.min.js"></script>
+<script src="bower_components\jquery-table2excel\dist\jquery.table2excel.min.js"></script>
 <script src="public/js/calendary.js"></script>

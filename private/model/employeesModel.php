@@ -110,4 +110,43 @@ class database
         }
         return $respuesta;
     }
+
+    public function position()
+    {
+        $sql = $this->db->query("SELECT * FROM cargos");
+        if ($this->db->rows($sql) > 0) {
+            while ($data = $this->db->recorrer($sql)) {
+                $respuesta[] = $data;
+            }
+        } else {
+            $respuesta = false;
+        }
+        return $respuesta;
+    }
+
+    public function timetable()
+    {
+        $sql = $this->db->query("SELECT * FROM horarios");
+        if ($this->db->rows($sql) > 0) {
+            while ($data = $this->db->recorrer($sql)) {
+                $respuesta[] = $data;
+            }
+        } else {
+            $respuesta = false;
+        }
+        return $respuesta;
+    }
+
+    public function payroll()
+    {
+        $sql = $this->db->query("SELECT * FROM nominas");
+        if ($this->db->rows($sql) > 0) {
+            while ($data = $this->db->recorrer($sql)) {
+                $respuesta[] = $data;
+            }
+        } else {
+            $respuesta = false;
+        }
+        return $respuesta;
+    }
 }
