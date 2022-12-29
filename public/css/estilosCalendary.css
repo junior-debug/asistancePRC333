@@ -31,7 +31,9 @@ body {
 
 .menu {
   width: 100%;
-  height: 4em;
+  height: 8em;
+  display: flex;
+  align-items: center;
 }
 
 .dataDays {
@@ -64,4 +66,10 @@ td {
 .cardCont {
   width: 100%;
   height: 6em;
+}
+
+.inputData {
+  width: 11em;
+  color: grey;
+  margin-right: 1em;
 }

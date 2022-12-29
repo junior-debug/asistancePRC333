@@ -28,31 +28,57 @@ if (empty($_SESSION)) {
                 #------------------------------------------------------------------------------------
             case 'iInsertCore':
                 $business = $_POST['business'];
+                $business = strtoupper($business);
                 $payroll = $_POST['payroll'];
+                $payroll = strtoupper($payroll);
                 $id = $_POST['id'];
+                $id = strtoupper($id);
                 $birthDate = $_POST['birthDate'];
+                $birthDate = strtoupper($birthDate);
                 $email = $_POST['email'];
+                $email = strtoupper($email);
                 $name = $_POST['name'];
+                $name = strtoupper($name);
                 $dateAdmission = $_POST['dateAdmission'];
+                $dateAdmission = strtoupper($dateAdmission);
                 $dueDate = $_POST['dueDate'];
+                $dueDate = strtoupper($dueDate);
                 $position = $_POST['position'];
+                $position = strtoupper($position);
                 $campus = $_POST['campus'];
+                $campus = strtoupper($campus);
                 $turn = $_POST['turn'];
+                $turn = strtoupper($turn);
                 $rotation = $_POST['rotation'];
+                $rotation = strtoupper($rotation);
                 $workingHours = $_POST['workingHours'];
+                $workingHours = strtoupper($workingHours);
                 $exceptionLevel = $_POST['exceptionLevel'];
+                $exceptionLevel = strtoupper($exceptionLevel);
                 $file = $_POST['file'];
+                $file = strtoupper($file);
                 $bank = $_POST['bank'];
+                $bank = strtoupper($bank);
                 $accType = $_POST['accType'];
+                $accType = strtoupper($accType);
                 $accNumber = $_POST['accNumber'];
+                $accNumber = strtoupper($accNumber);
                 $salary = $_POST['salary'];
+                $salary = strtoupper($salary);
                 $manualDexterity = $_POST['manualDexterity'];
+                $manualDexterity = strtoupper($manualDexterity);
                 $address = $_POST['address'];
+                $address = strtoupper($address);
                 $phone1 = $_POST['phone1'];
+                $phone1 = strtoupper($phone1);
                 $phone2 = $_POST['phone2'];
+                $phone2 = strtoupper($phone2);
                 $feeding = $_POST['feeding'];
+                $feeding = strtoupper($feeding);
                 $vacationBonus = $_POST['vacationBonus'];
+                $vacationBonus = strtoupper($vacationBonus);
                 $utilities = $_POST['utilities'];
+                $utilities = strtoupper($utilities);
 
                 $individualInsert = $conexion->registro(
                     $business,

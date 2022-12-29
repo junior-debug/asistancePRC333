@@ -3,7 +3,7 @@
 <div class="topSeparation"></div>
 
 <div class="menu">
-    <select id="selectMonth" name="select" onchange="selectMonth()" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+    <select id="selectMonth" name="select" onchange="selectMonth()" style="margin-left: 50px;" class="form-select inputData" aria-label=".form-select-lg example">
         <option value="">Seleccione mes</option>
         <option value="enero">enero</option>
         <option value="febrero">febrero</option>
@@ -18,6 +18,7 @@
         <option value="noviembre">noviembre</option>
         <option value="diciembre">diciembre</option>
     </select>
+    <input type="text" id="search" placeholder="Buscar" class="form-control inputData">
 </div>
 
 <div class="card cardCont">

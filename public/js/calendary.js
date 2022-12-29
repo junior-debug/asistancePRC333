@@ -70,6 +70,15 @@ $("#month").html(months[month]);
 const dataDays = document.getElementsByClassName("dataDay");
 const day = document.getElementsByClassName("day");
 
+$(document).ready(function () {
+  $("#search").on("keyup", function () {
+    let value = $(this).val().toUpperCase();
+    $("#tableBody tr").filter(function () {
+      $(this).toggle($(this).text().toUpperCase().indexOf(value) > -1);
+    });
+  });
+});
+
 function changeMonth(firstDayWeek, totalDaysMonth, selectedMonth) {
   let weekIterator = firstDayWeek - 1;
   for (let i = 0; i < totalDaysMonth; i++) {

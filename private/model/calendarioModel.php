@@ -86,22 +86,22 @@ class database
         return $respuesta;
     }
 
-    public function payrollUpdate($value, $id,)
+    public function payrollUpdate($value, $id)
     {
         $sql = $this->db->query("UPDATE empleados SET nomina_cliente = '$value', estatus_cambios = '1'  WHERE cedula = '$id'");
     }
 
-    public function positionUpdate($value, $id,)
+    public function positionUpdate($value, $id)
     {
         $sql = $this->db->query("UPDATE empleados SET cargo = '$value', estatus_cambios = '1'  WHERE cedula = '$id'");
     }
 
-    public function turnUpdate($value, $id,)
+    public function turnUpdate($value, $id)
     {
         $sql = $this->db->query("UPDATE empleados SET turno = '$value', estatus_cambios = '1'  WHERE cedula = '$id'");
     }
 
-    public function rotationUpdate($value, $id,)
+    public function rotationUpdate($value, $id)
     {
         $sql = $this->db->query("UPDATE empleados SET rotacion = '$value', estatus_cambios = '1'  WHERE cedula = '$id'");
     }
