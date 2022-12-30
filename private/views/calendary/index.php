@@ -2,38 +2,37 @@
 
 <div class="topSeparation"></div>
 
-<div class="menu">
-    <select id="selectMonth" name="select" onchange="selectMonth()" style="margin-left: 50px;" class="form-select inputData" aria-label=".form-select-lg example">
-        <option value="">Seleccione mes</option>
-        <option value="enero">enero</option>
-        <option value="febrero">febrero</option>
-        <option value="marzo">marzo</option>
-        <option value="abril">abril</option>
-        <option value="mayo">mayo</option>
-        <option value="junio">junio</option>
-        <option value="julio">julio</option>
-        <option value="agosto">agosto</option>
-        <option value="septiembre">septiembre</option>
-        <option value="octubre">octubre</option>
-        <option value="noviembre">noviembre</option>
-        <option value="diciembre">diciembre</option>
-    </select>
-    <input type="text" id="search" placeholder="Buscar" class="form-control inputData">
-</div>
-
-<div class="card cardCont">
-    <button class="btn btn-primary" style="width: 20%;" onclick="download()">Descargar Excel</button>
-</div>
-
-<div id="calendar" class="collectonme">
-    <div class="monthCont" style="display: flex;
-  justify-content: center;
-  align-items: center;">
+<div class="menu navbar navbar-expand-lg">
+    <div class="opt">
+        <select id="selectMonth" name="select" onchange="selectMonth()" style="margin-left: 50px;" class="form-select inputData" aria-label=".form-select-lg example">
+            <option value="">Seleccione mes</option>
+            <option value="enero">Enero</option>
+            <option value="febrero">Febrero</option>
+            <option value="marzo">Marzo</option>
+            <option value="abril">Abril</option>
+            <option value="mayo">Mayo</option>
+            <option value="junio">Junio</option>
+            <option value="julio">Julio</option>
+            <option value="agosto">Agosto</option>
+            <option value="septiembre">Septiembre</option>
+            <option value="octubre">Octubre</option>
+            <option value="noviembre">Noviembre</option>
+            <option value="diciembre">Diciembre</option>
+        </select>
+        <input type="text" id="search" placeholder="Buscar" class="form-control inputData">
+        <button class="btn btn-primary" style="width: 100%;" onclick="download()">Descargar Excel</button>
+    </div>
+    <div class="monthCont">
         <h2 id="month"></h2>
     </div>
+</div>
+
+<div class="topSeparation"></div>
+
+<div id="calendar" class="collectonme card" style="margin-left: 1em;margin-right: 1em;">
     <div class="calendaryCont">
-        <table id="table" class="table table-striped" style="width: 100%">
-            <thead class="table-dark">
+        <table id="table" class="table" style="width: 100%">
+            <thead class="">
                 <tr id="day-labels">
                     <th rowspan="2" class="dataDays">nomina</th>
                     <th rowspan="2" class="dataDays">cedula</th>

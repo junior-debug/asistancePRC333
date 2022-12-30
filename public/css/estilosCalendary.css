@@ -7,6 +7,10 @@ body {
   font-family: helvetica neue, helvetica, arial, sans-serif;
   font-weight: 200;
   color: black;
+  background-image: url(../images/form-wizard-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: max-content;
 }
 
 .dataUser {
@@ -25,15 +29,33 @@ body {
   border: 1px solid rgba(128, 128, 128, 0.342);
 }
 
+.titleDays {
+  border-bottom: 0px;
+}
+
 .week {
   display: flex;
+}
+
+.monthCont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.3em;
 }
 
 .menu {
   width: 100%;
   height: 8em;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  z-index: 100;
+}
+
+.opt {
+  display: flex;
+  margin-top: 1.5em;
 }
 
 .dataDays {
@@ -45,6 +67,10 @@ td {
 
 .topSeparation {
   height: 56px;
+}
+
+.topSeparation:nth-child(5) {
+  height: 165px;
 }
 
 .calendaryCont {
@@ -60,7 +86,6 @@ td {
 
 .monthDays {
   text-align: center;
-  border: 1px solid rgba(128, 128, 128, 0.342);
 }
 
 .cardCont {
